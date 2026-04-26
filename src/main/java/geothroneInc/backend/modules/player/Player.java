@@ -2,6 +2,7 @@ package geothroneInc.backend.modules.player;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -12,9 +13,16 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
 
     @Column(name = "score")

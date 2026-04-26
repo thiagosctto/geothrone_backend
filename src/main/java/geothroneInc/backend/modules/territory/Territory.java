@@ -18,8 +18,12 @@ public class Territory {
     private Double centerLat;
     private Double centerLon;
 
+    private String color;
+
     // Quem é o dono atual desse pedaço de chão?
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Player owner;
+
+
 }

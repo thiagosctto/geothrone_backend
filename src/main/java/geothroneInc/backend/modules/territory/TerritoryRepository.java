@@ -6,4 +6,5 @@ import java.util.List;
 public interface TerritoryRepository extends JpaRepository<Territory, String> {
     // Busca todas as terras (para desenhar o mapa global)
     List<Territory> findAll();
+
 }
