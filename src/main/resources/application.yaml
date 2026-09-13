@@ -1,5 +1,4 @@
 server:
-  # O Railway define a porta automaticamente na variável PORT
   port: ${PORT:8080}
 
 spring:
@@ -7,22 +6,26 @@ spring:
     name: backend
 
   datasource:
-    # URL Mágica: Monta o endereço usando as variáveis do Railway
-    # Se não achar (no seu PC), usa o localhost padrão
-    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:geothrone_db}
-    username: ${PGUSER:postgres}
-    password: ${PGPASSWORD:postgres}
+    # URL montada com o host, port e database da sua imagem
+    url: ${DATABASE_URL:jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres}
+
+    # Usuário exato mostrado na sua imagem
+    username: ${DB_USER:postgres.wunwwivptmwjojiiexpz}
+
+    # Coloque sua senha real aqui
+    password: ${DB_PASS:D$T3#9K9HmY/_TC}
+
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update # Na produção, idealmente seria 'validate', mas 'update' funciona para beta
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  # Configuração para evitar erro de CORS (Bloqueio de navegador/celular)
   web:
     cors:
       allowed-origins: "*"
