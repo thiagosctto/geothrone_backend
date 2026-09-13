@@ -1,16 +1,19 @@
-# 1. Estágio de Build (Baixa o Maven e o Java para compilar o código)
-FROM maven:3.9.6-eclipse-temurin-25 AS build
+# 1. Estágio de Build (Usa o JDK 25 oficial para compilar)
+FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-# Copia os arquivos de dependência e o código fonte
+# Copia os arquivos do Maven Wrapper e o código fonte
+COPY mvnw .
+COPY .mvn .mvn
 COPY pom.xml .
 COPY src ./src
 
-# Compila o projeto ignorando os testes para ser mais rápido
-RUN mvn clean package -DskipTests
+# Dá permissão de execução ao script e compila o projeto
+RUN chmod +x ./mvnw
+RUN ./mvnw clean package -DskipTests
 
-# 2. Estágio de Produção (Cria uma imagem leve apenas com o Java para rodar o app)
-FROM eclipse-temurin:25-jre-alpine
+# 2. Estágio de Produção (Usa o JRE 25 oficial para rodar, sendo mais leve)
+FROM eclipse-temurin:25-jre
 WORKDIR /app
 
 # Copia o arquivo .jar gerado no passo anterior
